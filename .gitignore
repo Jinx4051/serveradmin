@@ -1,3 +1,6 @@
 /.idea
 *.jpg
 *.png
+bootstrap*
+npm.js
+upload.php

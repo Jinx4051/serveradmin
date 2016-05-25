@@ -7,6 +7,16 @@
 
 require_once "common.php";
 
+//ini_set('display_errors', 'On');
+
+//requiresLogin();
+
+if (isset($_SESSION['flash'])) {
+    $flashMessages = $_SESSION['flash'];
+    unset($_SESSION['flash']);
+}
+
+
 $result = $db->query('SELECT * FROM `migration_schedule`');
 
 ?><!DOCTYPE html>
@@ -21,6 +31,11 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
     <link rel="icon" href="img/favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon"/>
 
+    <style>
+        body {
+            padding-top: 60px;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -32,13 +47,21 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    <li><a href="#"><span style="color: #ffffff;" class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                     <li class="active"><a href="login.php">Login</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
 
-    <br/>
+    <?php if (isset($flashMessages)): ?>
+        <div class="container">
+            <?php foreach ($flashMessages as $message): ?>
+                <div class="alert alert-success"><?= $message ?></div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
     <div class="container">
         <h1 class="jumbotron">Server Admin Migration Schedule 2016</h1>
     </div>
@@ -47,7 +70,7 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th><span class="glyphicon glyphicon-fire" aria-hidden="true"></span></th>
                     <th>Ticket ID</th>
                     <th>Client Contact Information</th>
                     <th>Server Name</th>
@@ -55,6 +78,7 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
                     <th>Migration Type</th>
                     <th>Migration Date</th>
                     <th>Migration Status</th>
+                    <th>Edit</th>
                 </tr>
             </thead>
 
@@ -68,38 +92,40 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
                     <td><?= $row['migration_type'] ?></td>
                     <td><?= $row['migration_date'] ?></td>
                     <td><?= $row['migration_status'] ?></td>
+                    <td><input type='checkbox' name='edit_record'></td>
                 </tr>
             <?php endwhile; ?>
         </table>
 
-        <br/> <br/>
+
+        <hr>
 
         <div>
-        <form class="form-group" action="insert.php" method="post">
+        <form class="form-group" action="insert.php" method="POST">
             <h3>Upload new Migration entry:</h3>
             <br/>
             <!-- TicketID -->
             <fieldset class="form-group">
-                <label for="ticketId">Ticket ID:</label>
-                <input type="text" class="form-control" id="ticketId" placeholder="Example 'AAA-123-45678'">
+                <label>Ticket ID:</label>
+                <input type="text" name="ticketId" class="form-control" id="ticketId" placeholder="Example 'AAA-123-45678'">
             </fieldset>
 
             <!-- Client Contact details -->
             <fieldset class="form-group">
-                <label for="clientContact">Client Contact details:</label>
-                <input type="text" class="form-control" id="clientContact" placeholder="Email and/or Contact number">
+                <label>Client Contact details:</label>
+                <input type="text" name="clientContact" class="form-control" id="clientContact" placeholder="Email and/or Contact number">
             </fieldset>
 
             <!-- Client Server Name -->
             <fieldset class="form-group">
-                <label for="clientServer">Client Server Name:</label>
-                <input type="text" class="form-control" id="clientServer" placeholder="Example 'testing.aserv.co.za'">
+                <label>Client Server Name:</label>
+                <input type="text" name="clientServer" class="form-control" id="clientServer" placeholder="Example 'testing.aserv.co.za'">
             </fieldset>
 
             <!-- Server Type -->
             <fieldset class="form-group">
-                <label for="serverType">Server Type:</label>
-                <select class="form-control" id="serverType">
+                <label>Server Type:</label>
+                <select class="form-control" name="serverType" id="serverType">
                     <option>Shared</option>
                     <option>Reseller</option>
                     <option>Dedicated - Managed</option>
@@ -109,8 +135,8 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
 
             <!-- Migration Type -->
             <fieldset class="form-group">
-                <label for="migrationType">Migration Type:</label>
-                <select class="form-control" id="migrationType">
+                <label>Migration Type:</label>
+                <select class="form-control" name="migrationType" id="migrationType">
                     <option>VMware - HyperV</option>
                     <option>Other</option>
                 </select>
@@ -118,21 +144,22 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
 
             <!-- Migration Date -->
             <fieldset class="form-group">
-                <label for="migrationDate">Migration Date:</label>
-                <input type="date" class="form-control" id="migrationDate">
+                <label>Migration Date:</label>
+                <input type="date" name="migrationDate" class="form-control" id="migrationDate">
             </fieldset>
 
             <!-- Migration Status -->
             <fieldset class="form-group">
-                <label for="migrationStatus">Migration Status:</label>
-                <select class="form-control" id="migrationStatus">
+                <label>Migration Status:</label>
+                <select class="form-control" name="migrationStatus" id="migrationStatus">
                     <option>Pending</option>
                     <option>Completed</option>
                     <option>Cancelled</option>
                 </select>
             </fieldset>
+
             <br/>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <input type="submit" class="btn btn-primary"/>
         </form>
         </div>
     </div>
