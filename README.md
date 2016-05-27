@@ -1,5 +1,7 @@
 # Server Admin Tracker
 
+This project is still under development. Check back soon for an updated README
+
 [comment]: # (TODO Give a short intrduction here)
 
 ## Installation
