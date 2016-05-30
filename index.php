@@ -7,8 +7,6 @@
 
 require_once "common.php";
 
-//ini_set('display_errors', 'On');
-
 //requiresLogin();
 
 if (isset($_SESSION['flash'])) {
@@ -47,7 +45,7 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#"><span style="color: #ffffff;" class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
+                    <li><a href="index.php"><span style="color: #ffffff;" class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
                     <li class="active"><a href="login.php">Login</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
