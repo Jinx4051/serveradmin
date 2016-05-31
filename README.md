@@ -6,9 +6,9 @@ This tool will allow you to add metadata about a Client's server, Ticket communi
 
 ## Installation
 
-To be added.
+Please ignore the upload.php file. :(
 
-### Database Setup
+## Database Setup
 
 The database is currently set up with the following fields: 
 _ _ _ _ _ _ _ _ _ _ 
@@ -24,11 +24,11 @@ migration_status ;
 
 The insert.php file currently pulls the information from the form located on the index.php file and outputs the information in a table above the form.
 
-### Config File
+## Config File
 
 To be added.
 
-### User Creation
+## User Creation
 
 To be added.
 
