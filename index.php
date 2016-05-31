@@ -7,9 +7,7 @@
 
 require_once "common.php";
 
-//ini_set('display_errors', 'On');
-
-//requiresLogin();
+requiresLogin();
 
 if (isset($_SESSION['flash'])) {
     $flashMessages = $_SESSION['flash'];
@@ -101,7 +99,8 @@ $result = $db->query('SELECT * FROM `migration_schedule`');
         <hr>
 
         <div>
-        <form class="form-group" action="insert.php" method="POST">
+            <!--I did try to use $_POST but unfortunately a problem on my local was not allowing it to run without errors :( -->
+            <form class="form-group" action="insert.php" method="get">
             <h3>Upload new Migration entry:</h3>
             <br/>
             <!-- TicketID -->
